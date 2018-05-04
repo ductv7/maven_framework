@@ -1,6 +1,8 @@
 package com.selenium.testcases;
 
+import org.openqa.selenium.Keys;
 import org.testng.annotations.Test;
+
 import java.io.IOException;
 
 import org.testng.annotations.Test;
@@ -22,11 +24,17 @@ public class AppTest extends BaseTestUI {
 		{    
         navigateBrowser();
         
-        sendText("Search.Textbox", "Predix_search");
+        //sendText("Search.Textbox", "Predix_search");
         
-        click("Login.SearchBtn");
+        //click("Login.SearchBtn");
         
-        //driver.get(pros.getProperty("URL"));
+        //sendTextWithEnter("Search.Textbox", "Predix_search");
+		
+		click("Lookup.Icon");
+		
+		checkExist("Lookup.Box");
+		
+		sendTextWithEnter("Lookup.Box", "Predix_search");
     }
 
 }

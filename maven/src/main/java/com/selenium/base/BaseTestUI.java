@@ -4,16 +4,20 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.interactions.SendKeysAction;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -34,7 +38,7 @@ public class BaseTestUI {
 	
 	//private Logger logger = Logger.getLogger(BaseTestUI.class.getName());
 	
-	BasicProperties bp = new BasicProperties();
+	BasicProperties bp  = new BasicProperties();
 	
 	public WebDriver  initializeDriver() throws IOException {
 		
@@ -77,30 +81,7 @@ public class BaseTestUI {
 		
 	}
 	
-	/*
-	private Properties loadObjectRepositories() throws IOException{
 		
-		pros = new Properties();
-		
-		FileInputStream fis = new FileInputStream(Global.FileObjRepository);//Code will read object repos
-
-		pros.load(fis);
-
-		return pros;
-	}
-	/*
-	private Properties loadEnvRepositories() throws IOException{
-		
-		pros = new Properties();
-		
-		FileInputStream fis = new FileInputStream(Global.FileEnv);//Code will read environment
-
-		pros.load(fis);
-
-		return pros;
-	}
-		*/
-	
 	private By getBy(String objPath) {
 		pros = bp.load(Global.FileObjRepository);
 		By r = null;
@@ -146,8 +127,10 @@ public class BaseTestUI {
 		driver = initializeDriver();
 				
 		driver.get(bp.load(Global.FileEnv).getProperty("URL"));
+		
+		driver.manage().window().maximize();
 	
-	}		
+	}	
 	
 	/**
 	 * 
@@ -158,10 +141,18 @@ public class BaseTestUI {
 	
 	public void sendText(String objPath, String fieldName) throws FileNotFoundException{
 		
-		String text = ExcelData.getCellValueData(fieldName);
+		String input = ExcelData.getCellValueData(fieldName);
 		
-		driver.findElement(getBy(objPath)).sendKeys(text);
+		driver.findElement(getBy(objPath)).sendKeys(input);
 	}
+
+	public void sendTextWithEnter(String objPath, String fieldName) throws FileNotFoundException{
+		
+		String input = ExcelData.getCellValueData(fieldName);
+		
+		driver.findElement(getBy(objPath)).sendKeys(input + Keys.ENTER);
+	}
+
 	
 	public void click(String objPath) {
 
@@ -172,4 +163,26 @@ public class BaseTestUI {
 		}
 	}
 	
+	public List<WebElement> getElements (String objPath){
+		
+		List<WebElement> r = null;
+	try {
+		
+		r = driver.findElements(getBy(objPath));
+		
+	}catch (Exception e){
+		
+		e.getMessage();
+	}	
+		
+	
+		return r;
+	}
+	
+	public boolean checkExist (String objPath){
+		
+		if (driver.findElement(getBy(objPath)).isDisplayed());
+		
+		return true;
+	}
 }

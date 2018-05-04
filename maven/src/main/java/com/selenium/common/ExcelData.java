@@ -1,5 +1,11 @@
 package com.selenium.common;
 
+/**
+ * @author Tran Viet Duc
+ * 
+ * @version 0.1
+ */
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -17,6 +23,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.streaming.SXSSFRow.CellIterator;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -44,7 +51,9 @@ public class ExcelData {
 		
 		//readXLSXfile("Predix_search");
 		
-		getCellValueData("Predix_search");
+		System.out.println(getRowIndex("Predix_search"));
+		
+		System.out.println(getCellValue("Predix_search"));
 		
 				 }
 
@@ -81,56 +90,72 @@ public class ExcelData {
 		
 		
 	}
-
+	
 	public static String getCellValue(String fieldName) {
+		
 		String r = "";
+		
 		int iRow = 0;
 
 		//iRow = findRow(fieldName);
 
-		iRow = readXLSXfile(fieldName);
+		iRow = getRowIndex(fieldName);
 		
-		if (iRow > 0)
-
-			r = row.cellIterator().next().getStringCellValue();
-
-		return r;
-	}
-
+		if (iRow > 0) {
+			
+			r = sheet.getRow(iRow).getCell(1).getStringCellValue();
+			
+			}
+	return r;	
 	
-	public static int findRow(String searchText) {
+	}
+	
+	public static int findRow(int iCol, String searchText) {
 		for (Row row : sheet) {
-			for (Cell cell : row) {
-				if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-					if (cell.getRichStringCellValue().getString().trim()
-							.equals(searchText)) {
-						return row.getRowNum();
-					}
+			Cell cell = row.getCell(iCol);
+			if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+				if (cell.getRichStringCellValue().getString().equals(searchText)) {
+					return row.getRowNum();
 				}
 			}
 		}
 		return 0;
 	}
 	
-	public static int readXLSXfile(String search_text){
+	public static int findCol (int iRow, String searchText){
 		
-		Iterator rows = sheet.rowIterator();
+		Row row = sheet.getRow(iRow);
+		for (Cell cell : row) {
+			if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+				if (cell.getRichStringCellValue().getString().contains(searchText)) {
+					return cell.getColumnIndex();
+				}
+			}
+		}		
+		return 0;
+	}
+	
+	public static int getRowIndex(String search_text){
+		
+		Iterator<Row> itr = sheet.iterator();
 
-		while (rows.hasNext())
+		while (itr.hasNext())
 		{
-			row=(XSSFRow) rows.next();
+			Row row = itr.next();
 			
-			Iterator cells = row.cellIterator();
+			Iterator<Cell> cellIterator = row.cellIterator();
 			
-			while (cells.hasNext())
-			{
-				cell=(XSSFCell) cells.next();
+			while (cellIterator.hasNext())
+			{	
+				Cell cell = cellIterator.next();
 		
-				if (cell.getCellType() == XSSFCell.CELL_TYPE_STRING)
+				if (cell.getCellType() == Cell.CELL_TYPE_STRING)
 				{
 					if (cell.getRichStringCellValue().getString().trim().equals(search_text)) {
+						
 						//row.getRowNum();
-						return row.getRowNum();
+						                     
+                        return row.getRowNum();
 					}
 				}
 				else if(cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC)
@@ -162,12 +187,12 @@ public class ExcelData {
 		//iterating r number of rows
 		for (int r=0;r < 5; r++ )
 		{
-			XSSFRow row = sheet.createRow(r);
+			row = sheet.createRow(r);
 
 			//iterating c number of columns
 			for (int c=0;c < 5; c++ )
 			{
-				XSSFCell cell = row.createCell(c);
+				cell = row.createCell(c);
 	
 				cell.setCellValue("Cell "+r+" "+c);
 			}

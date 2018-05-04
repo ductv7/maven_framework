@@ -2,19 +2,17 @@
 <testng-results skipped="0" failed="1" total="1" passed="0">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="9516" started-at="2018-01-28T17:24:55Z" finished-at="2018-01-28T17:25:04Z">
+  <suite name="Default suite" duration-ms="40" started-at="2018-05-04T14:38:40Z" finished-at="2018-05-04T14:38:40Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="9516" started-at="2018-01-28T17:24:55Z" finished-at="2018-01-28T17:25:04Z">
+    <test name="Default test" duration-ms="40" started-at="2018-05-04T14:38:40Z" finished-at="2018-05-04T14:38:40Z">
       <class name="com.selenium.testcases.AppTest">
-        <test-method status="FAIL" signature="TestCase1()[pri:0, instance:com.selenium.testcases.AppTest@d2cc05a]" test-instance-name="" name="TestCase1" duration-ms="9489" started-at="2018-01-29T00:24:55Z" finished-at="2018-01-29T00:25:04Z">
+        <test-method status="FAIL" signature="TestCase1()[pri:0, instance:com.selenium.testcases.AppTest@548a9f61]" test-instance-name="" name="TestCase1" duration-ms="15" started-at="2018-05-04T21:38:40Z" finished-at="2018-05-04T21:38:40Z">
           <exception class="java.lang.NullPointerException">
             <full-stacktrace>
               <![CDATA[java.lang.NullPointerException
-	at com.selenium.common.ExcelData.getCellValueNoTCid(ExcelData.java:69)
-	at com.selenium.common.ExcelData.getCellValueDataNoTCid(ExcelData.java:56)
-	at com.selenium.base.BaseTestUI.sendText(BaseTestUI.java:161)
-	at com.selenium.testcases.AppTest.TestCase1(AppTest.java:25)
+	at com.selenium.base.BaseTestUI.openBrowser(BaseTestUI.java:135)
+	at com.selenium.testcases.AppTest.TestCase1(AppTest.java:27)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)

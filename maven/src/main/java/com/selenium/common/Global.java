@@ -47,6 +47,6 @@ public class Global {
 	 */
 	
 	public static String TestID = null;
-	public static String CurrDataFileName = "data/TestData.xlsx";
+	public static String CurrDataFileName = "data/TestData1.xlsx";
 	public static String SheetName="Data";
 }

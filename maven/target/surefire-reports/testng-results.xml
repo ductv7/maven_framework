@@ -2,12 +2,12 @@
 <testng-results skipped="0" failed="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="com.selenium.testcases.AppTest" duration-ms="10395" started-at="2018-01-05T15:36:53Z" finished-at="2018-01-05T15:37:03Z">
+  <suite name="com.selenium.testcases.AppTest" duration-ms="23267" started-at="2018-05-04T14:43:07Z" finished-at="2018-05-04T14:43:30Z">
     <groups>
     </groups>
-    <test name="Command line test" duration-ms="10395" started-at="2018-01-05T15:36:53Z" finished-at="2018-01-05T15:37:03Z">
+    <test name="Command line test" duration-ms="23267" started-at="2018-05-04T14:43:07Z" finished-at="2018-05-04T14:43:30Z">
       <class name="com.selenium.testcases.AppTest">
-        <test-method status="PASS" signature="TestCase1()[pri:0, instance:com.selenium.testcases.AppTest@3d24753a]" test-instance-name="" name="TestCase1" duration-ms="10375" started-at="2018-01-05T22:36:53Z" finished-at="2018-01-05T22:37:03Z">
+        <test-method status="PASS" signature="TestCase1()[pri:0, instance:com.selenium.testcases.AppTest@35f983a6]" test-instance-name="" name="TestCase1" duration-ms="23232" started-at="2018-05-04T21:43:07Z" finished-at="2018-05-04T21:43:30Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- TestCase1 -->
