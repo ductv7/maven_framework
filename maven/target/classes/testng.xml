@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Sanity on the-ascott site" verbose="1">
+  <test name="Sanity for the-ascott" >
+    <packages>
+    	<package name="com.selenium.testcases"/>
+    </packages>
+ </test>
+</suite>

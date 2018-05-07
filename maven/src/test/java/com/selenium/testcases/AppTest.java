@@ -1,14 +1,11 @@
 package com.selenium.testcases;
 
-import org.openqa.selenium.Keys;
-import org.testng.annotations.Test;
-
 import java.io.IOException;
 
 import org.testng.annotations.Test;
 
-import com.selenium.base.*;
-
+import com.database.connection.DatabaseTesting;
+import com.selenium.base.BaseTestUI;
 /**
  * Unit test for simple App.
  */
@@ -20,9 +17,13 @@ public class AppTest extends BaseTestUI {
      * @param testName name of the test case
      * @throws IOException 
      */
+		
+		DatabaseTesting db = new DatabaseTesting();
+	
 	public void TestCase1() throws IOException
-		{    
-        navigateBrowser();
+		{    		
+				
+		navigateBrowser();
         
         //sendText("Search.Textbox", "Predix_search");
         
@@ -35,6 +36,9 @@ public class AppTest extends BaseTestUI {
 		checkExist("Lookup.Box");
 		
 		sendTextWithEnter("Lookup.Box", "Predix_search");
-    }
-
+		
+		db.compareResultSetDb("query_actor", "exp_query_actor");
+		
+	}
+		
 }
