@@ -139,16 +139,16 @@ public class BaseTestUI {
 	 * @throws FileNotFoundException 
 	 */
 	
-	public void sendText(String objPath, String fieldName) throws FileNotFoundException{
+	public void sendText(String objPath, String key) throws FileNotFoundException{
 		
-		String input = ExcelData.getCellValueData(fieldName);
+		String input = ExcelData.getCellValueData(key);
 		
 		driver.findElement(getBy(objPath)).sendKeys(input);
 	}
 
-	public void sendTextWithEnter(String objPath, String fieldName) throws FileNotFoundException{
+	public void sendTextWithEnter(String objPath, String key) throws FileNotFoundException{
 		
-		String input = ExcelData.getCellValueData(fieldName);
+		String input = ExcelData.getCellValueData(key);
 		
 		driver.findElement(getBy(objPath)).sendKeys(input + Keys.ENTER);
 	}

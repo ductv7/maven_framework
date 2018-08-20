@@ -36,7 +36,7 @@ public class DataBaseConnector {
 		String resultValue = "";
 		ResultSet rs;
 
-		// To connect with QA Database
+		// To connect with mysql database
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");

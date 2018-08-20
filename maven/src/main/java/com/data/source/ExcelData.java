@@ -1,4 +1,4 @@
-package com.selenium.common;
+package com.data.source;
 
 /**
  * @author Tran Viet Duc
@@ -11,26 +11,16 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CreationHelper;
-import org.apache.poi.ss.usermodel.DataFormatter;
-import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.apache.poi.ss.util.NumberToTextConverter;
-import org.apache.poi.xssf.streaming.SXSSFRow.CellIterator;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import com.selenium.common.Global;
 
 public class ExcelData {
 
@@ -40,11 +30,32 @@ public class ExcelData {
 
 	private static String SHEET_DATA = "Data";
 	
-	//private static String SHEET_DATA_1="Data1";
+	private static String SHEET_DATA_1="Data1";
 
 	private static XSSFRow row;
 	private static XSSFCell cell;
 	
+	String search;
+	
+	
+//	public static void main(String[] args) throws IOException{
+//		
+//		loadFile(Global.CurrDataFileName);
+//		
+//		//System.out.println(getCellValueData("Predix_search"));
+//		
+//		//readXLSXfile("Predix_search");
+//		
+//		System.out.println(getRowIndex("Predix_search"));
+//		
+//		System.out.println(getCellValue("Predix_search"));
+//		
+//				 }
+	
+//	public ExcelData(){
+//		super();
+//		this.search = search;	
+//	}
 
 	public static void loadFile(String fileName) throws FileNotFoundException {
 		loadFile(fileName, SHEET_DATA);
@@ -71,47 +82,32 @@ public class ExcelData {
 
 	}
 
-	public static String getCellValueData(String fieldName)
+	public String getCellValueData(String fieldName)
 			throws FileNotFoundException {
 		loadFile(Global.CurrDataFileName);
 		
 		return getCellValue(fieldName);
 		
+		
 	}
 	
 	public static String getCellValue(String fieldName) {
 		
-		String r = null;
+		String r = "";
 		
 		int iRow = 0;
 
-		DataFormatter formatter = new DataFormatter();
-		
-		FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
-		
+		//iRow = findRow(fieldName);
+
 		iRow = getRowIndex(fieldName);
 		
-		Cell cell = sheet.getRow(iRow).getCell(1);
-		
-		if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-				
-			r = formatter.formatCellValue(cell); 
-				
+		if (iRow > 0) {
+			
+			r = sheet.getRow(iRow).getCell(1).getStringCellValue();
+			
 			}
-		else if(cell.getCellType() == Cell.CELL_TYPE_FORMULA){
-			
-			evaluator.equals(cell);
-			r = formatter.formatCellValue(cell, evaluator);
-		}
 		
-		
-		else if (cell.getCellType()== Cell.CELL_TYPE_STRING) {
-			
-			r = cell.getStringCellValue();
-			
-		}
-	
-		return r;	
+	return r;	
 	
 	}
 	
@@ -124,7 +120,6 @@ public class ExcelData {
 				}
 			}
 		}
-		
 		return 0;
 	}
 	
@@ -141,7 +136,7 @@ public class ExcelData {
 		return 0;
 	}
 	
-	public static int getRowIndex (String search_text){
+	public static int getRowIndex(String search_text){
 		
 		Iterator<Row> itr = sheet.iterator();
 
@@ -163,25 +158,52 @@ public class ExcelData {
 						                     
                         return row.getRowNum();
 					}
-					
 				}
-				else if (cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC)
+				else if(cell.getCellType() == XSSFCell.CELL_TYPE_NUMERIC)
 				{
-					
-					if(cell.getRichStringCellValue().getString().trim().equals(search_text)) {
-								
-						return row.getRowNum();
-					}
-				
+					System.out.print(cell.getNumericCellValue()+" ");
 				}
-				else {
-					
-					System.out.println("No value");
+				else
+				{
+					//U Can Handel Boolean, Formula, Errors
 				}
 			}
 			
 	}
 		return 0;
+
+	/**
+	 * public static int findCol(XSSFSheet sheet, int iRow, String searchText) {
+	 * Row row = sheet.getRow(iRow); for (Cell cell : row) { if
+	 * (cell.getCellType() == Cell.CELL_TYPE_STRING) { if
+	 * (cell.getRichStringCellValue().getString() .equals(searchText)) { return
+	 * cell.getColumnIndex(); } } } return 0; }
+	 **/
+	}
+	
+	public static void writeXLSXfile() throws IOException{
 		
+		sheet = workbook.createSheet(SHEET_DATA_1);
+
+		//iterating r number of rows
+		for (int r=0;r < 5; r++ )
+		{
+			row = sheet.createRow(r);
+
+			//iterating c number of columns
+			for (int c=0;c < 5; c++ )
+			{
+				cell = row.createCell(c);
+	
+				cell.setCellValue("Cell "+r+" "+c);
+			}
+		}
+
+		FileOutputStream fileOut = new FileOutputStream(Global.CurrDataFileName);
+
+		//write this workbook to an Outputstream.
+		workbook.write(fileOut);
+		fileOut.flush();
+		fileOut.close();
 	}
 }
